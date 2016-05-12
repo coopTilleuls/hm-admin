@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: 'hm-admin.component.html',
   styleUrls: ['hm-admin.component.css']
 })
-export class HmAdminAppComponent {
+export class HmAdminComponent {
   title = 'hm-admin works!';
 }

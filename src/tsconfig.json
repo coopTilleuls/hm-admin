@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "mapRoot": "",
@@ -9,9 +9,10 @@
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noImplicitAny": false,
-    "outDir": "../dist/",
+    "outDir": "../lib",
     "rootDir": ".",
     "sourceMap": true,
+    "removeComments": true,
     "target": "es5",
     "inlineSources": true
   },

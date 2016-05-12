@@ -5,18 +5,18 @@ import {
   it,
   inject
 } from '@angular/core/testing';
-import { HmAdminAppComponent } from '../app/hm-admin.component';
+import { HmAdminComponent } from './hm-admin.component.ts';
 
 beforeEachProviders(() => [HmAdminAppComponent]);
 
 describe('App: HmAdmin', () => {
   it('should create the app',
-      inject([HmAdminAppComponent], (app: HmAdminAppComponent) => {
+      inject([HmAdminComponent], (app: HmAdminComponent) => {
     expect(app).toBeTruthy();
   }));
 
   it('should have as title \'hm-admin works!\'',
-      inject([HmAdminAppComponent], (app: HmAdminAppComponent) => {
+      inject([HmAdminComponent], (app: HmAdminComponent) => {
     expect(app.title).toEqual('hm-admin works!');
   }));
 });
