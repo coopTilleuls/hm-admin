@@ -1,0 +1,29 @@
+{
+  "name": "hm-admin",
+  "version": "0.1.0",
+  "description": "hm-admin is an angular2 component which help you to build backoffice automatically for an hypermedia API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coopTilleuls/hm-admin.git"
+  },
+  "keywords": [
+    "hypermedia",
+    "angular2",
+    "backoffice",
+    "admin"
+  ],
+  "author": "Grégory Copin <gregcop1@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coopTilleuls/hm-admin/issues"
+  },
+  "homepage": "https://github.com/coopTilleuls/hm-admin#readme",
+  "contributors": [
+    "Grégory Copin <gregcop1@gmail.com>",
+    "Hamza Amrouche <hamza.simperfit@gmail.com>"
+  ]
+}
