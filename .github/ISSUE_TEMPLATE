@@ -1,0 +1,23 @@
+### Prerequisites
+
+* [ ] Are you running the latest version of your current branch?
+* [ ] Did you check your issue is not [already reported](https://github.com/coopTilleuls/hm-admin/issues)?
+* [ ] Have you tried to poke someone on [Gitter](https://gitter.im/coopTilleuls/hm-admin)?
+
+### Description
+
+[Description of the bug or feature]
+
+### Steps to Reproduce
+
+1. [First Step]
+2. [Second Step]
+3. [and so on...]
+
+**Expected behavior:** [What you expected to happen]
+
+**Actual behavior:** [What actually happened]
+
+### Context
+
+You can get this information from executing `npm list hm-admin` at the command line. Also, please include the OS and what version of the OS you're running.

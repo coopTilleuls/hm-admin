@@ -30,7 +30,8 @@
   "homepage": "https://github.com/coopTilleuls/hm-admin#readme",
   "contributors": [
     "Grégory Copin <gregcop1@gmail.com>",
-    "Hamza Amrouche <hamza.simperfit@gmail.com>"
+    "Hamza Amrouche <hamza.simperfit@gmail.com>",
+    "Rodrigue Villetard <rodrigue@les-tilleuls.coop>"
   ],
   "dependencies": {
     "@angular/common": "2.0.0-rc.1",
