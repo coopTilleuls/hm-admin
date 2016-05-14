@@ -12,7 +12,8 @@
             map: {
                 '@angular': 'vendor/@angular',
                 'rxjs': 'vendor/rxjs',
-                'hm-admin':'hm-admin'
+                'hm-admin':'hm-admin',
+                'admin':'exemples/admin'
             },
             packages: {
                 'dist': { defaultExtension: 'js', format: 'register', main: 'boot.js' },
@@ -24,7 +25,8 @@
                 '@angular/platform-browser-dynamic': { defaultExtension: 'js', main: 'index.js' },
                 '@angular/router': { defaultExtension: 'js', main: 'index.js' },
                 'rxjs': { defaultExtension: 'js' },
-                'hm-admin': { defaultExtension: 'js',main:'hm-admin.component.js' }
+                'hm-admin': { defaultExtension: 'js' },
+                'admin': { defaultExtension: 'js' }
             }
         });
         System.import('exemples/admin/admin.js').catch(function (err) {console.error(err);});
