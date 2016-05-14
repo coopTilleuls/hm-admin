@@ -1,1 +1,1 @@
-export * from './lib/HmAdminComponent';
+export * from './dist/hm-admin/hm-admin.component';
