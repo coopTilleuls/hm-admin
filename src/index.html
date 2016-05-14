@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hm-admin</title>
+    <script src="vendor/es6-shim/es6-shim.js"></script>
+    <script src="vendor/reflect-metadata/Reflect.js"></script>
+    <script src="vendor/systemjs/dist/system.src.js"></script>
+    <script src="vendor/zone.js/dist/zone.js"></script>
+    <script src="vendor/@angular/core/index.js"></script>
+    <script>
+        System.config({
+            map: {
+                '@angular': 'vendor/@angular',
+                'rxjs': 'vendor/rxjs',
+                'hm-admin':'hm-admin'
+            },
+            packages: {
+                'dist': { defaultExtension: 'js', format: 'register', main: 'boot.js' },
+                '@angular/common': { defaultExtension: 'js', main: 'index.js' },
+                '@angular/compiler': { defaultExtension: 'js', main: 'index.js' },
+                '@angular/core': { defaultExtension: 'js', main: 'index.js' },
+                '@angular/http': { defaultExtension: 'js', main: 'index.js' },
+                '@angular/platform-browser': { defaultExtension: 'js', main: 'index.js' },
+                '@angular/platform-browser-dynamic': { defaultExtension: 'js', main: 'index.js' },
+                '@angular/router': { defaultExtension: 'js', main: 'index.js' },
+                'rxjs': { defaultExtension: 'js' },
+                'hm-admin': { defaultExtension: 'js',main:'hm-admin.component.js' }
+            }
+        });
+        System.import('exemples/admin/admin.js').catch(function (err) {console.error(err);});
+    </script>
+</head>
+<body>
+<app>Loading..</app>
+</body>
+</html>

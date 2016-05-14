@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 import { HmAdminComponent } from './hm-admin.component.ts';
 
-beforeEachProviders(() => [HmAdminAppComponent]);
+beforeEachProviders(() => [HmAdminComponent]);
 
 describe('App: HmAdmin', () => {
   it('should create the app',
