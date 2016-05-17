@@ -12,19 +12,16 @@
             map: {
                 '@angular': 'vendor/@angular',
                 'rxjs': 'vendor/rxjs',
-                'hm-admin':'hm-admin'
+                'hm-admin':'hm-admin',
+                'admin':'exemples/admin'
             },
             packages: {
-                'dist': { defaultExtension: 'js', format: 'register', main: 'boot.js' },
+                '../': { defaultExtension: 'js' },
                 '@angular/common': { defaultExtension: 'js', main: 'index.js' },
                 '@angular/compiler': { defaultExtension: 'js', main: 'index.js' },
                 '@angular/core': { defaultExtension: 'js', main: 'index.js' },
-                '@angular/http': { defaultExtension: 'js', main: 'index.js' },
                 '@angular/platform-browser': { defaultExtension: 'js', main: 'index.js' },
                 '@angular/platform-browser-dynamic': { defaultExtension: 'js', main: 'index.js' },
-                '@angular/router': { defaultExtension: 'js', main: 'index.js' },
-                'rxjs': { defaultExtension: 'js' },
-                'hm-admin': { defaultExtension: 'js',main:'hm-admin.component.js' }
             }
         });
         System.import('exemples/admin/admin.js').catch(function (err) {console.error(err);});
