@@ -1,13 +1,13 @@
-
 import {Http} from '@angular/http';
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class CoreDefinitionService {
 
-    public cacheCoreDefinition: any;
+    public definitions: any;
 
     constructor(private http: Http) {}
 
@@ -20,14 +20,16 @@ export class CoreDefinitionService {
      */
     getCoreDefinition(url) {
         let definition;
-        this.cacheCoreDefinition = this.getCacheCoreDefinition();
 
-        if (this.cacheCoreDefinition === null) {
+        this.getCacheCoreDefinition().subscribe(res => {
+        if (res === null) {
             definition = this.fetchCoreDefinition(url);
-            this.setCacheCoreDefinition(definition);
+            return this.setCacheCoreDefinition(definition);
         }
+          });
+        this.definitions = this.getCacheCoreDefinition();
 
-        return this.cacheCoreDefinition;
+        return this.definitions;
     }
 
     /**
@@ -45,8 +47,10 @@ export class CoreDefinitionService {
          .map(res => {
              for (let key in res) {
                 let value = res[key];
-                if (value instanceof Object && typeof value['@id'] !== 'undefined') {
-                    value = value['@id'];
+                 if (typeof value === 'object'
+                     && !(value instanceof String)
+                     && value.hasOwnProperty('@id')) {
+                     value = value['@id'];
                 }
                  this.add(key, value, coreObject);
              }
@@ -63,6 +67,7 @@ export class CoreDefinitionService {
      */
     setCacheCoreDefinition(definitions: Observable<any>) {
         definitions.subscribe(res => localStorage.setItem('definition', JSON.stringify(res)));
+        return definitions;
     }
 
     /**
@@ -71,7 +76,8 @@ export class CoreDefinitionService {
      * @returns {Object}
      */
     getCacheCoreDefinition() {
-        return localStorage.getItem('definition');
+        let localDef = localStorage.getItem('definition');
+        return Observable.of(localDef);
     }
 
     /**
