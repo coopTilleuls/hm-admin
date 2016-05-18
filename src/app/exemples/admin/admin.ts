@@ -19,7 +19,8 @@ export class App {
 
 export interface Configuration {
   api: {
-    baseUrl: string
-  }
+    baseUrl: string,
+    definitionUrl: string
+  };
 }
 bootstrap(App);
