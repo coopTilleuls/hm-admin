@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HTTP_PROVIDERS} from '@angular/http';
-import {ConfigService} from './services/config/config.service';
+import {ConfigService} from './services/config/Config.service';
 import {CoreDefinitionService} from './services/core/CoreDefinition.service';
 
 @Component({
@@ -11,7 +11,7 @@ import {CoreDefinitionService} from './services/core/CoreDefinition.service';
   providers: [ConfigService, CoreDefinitionService, HTTP_PROVIDERS]
 })
 export class HmAdminComponent implements OnInit {
-  @Input('config')
+  @Input()
   config: any;
 
   constructor(private configService: ConfigService,
@@ -19,8 +19,6 @@ export class HmAdminComponent implements OnInit {
 
   ngOnInit() {
     this.configService.hookMeIfYouCan(this.config);
-    this.coreDefinitionService.getCoreDefinition(this.configService.api.definitionUrl);
+    this.coreDefinitionService.loadDefinitions();
   }
-
-  title = 'hm-admin works!';
 }

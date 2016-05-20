@@ -1,5 +1,5 @@
 import {it, describe, expect, inject, beforeEachProviders} from '@angular/core/testing';
-import {ConfigService} from './config.service';
+import {ConfigService} from './Config.service';
 
 describe('Config service', () => {
 
