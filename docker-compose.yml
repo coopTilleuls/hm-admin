@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+    web:
+        build: ./docker/spa
+        command: npm start
+        working_dir: /app
+        ports:
+            - "4200:4200"
+            - "49152:49152"
+        volumes:
+            - ".:/app"
+        volumes_from:
+            - "container:hmadmin_node_modules"
+
+    api:
+        build: ./docker/api
+        ports:
+            - "60000:60000"
+        links:
+            - mysql:mysql
+
+    mysql:
+        image: mysql:5
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: api-platform
+            MYSQL_PASSWORD: api-platform
+            MYSQL_DATABASE: api-platform
+        volumes_from:
+            - "container:hmadmin_mysql_data"
+
+#docker create --name hmadmin_node_modules -v /app/node_modules tianon/true
+#docker create --name hmadmin_mysql_data -v /var/lib/mysql mysql:5
