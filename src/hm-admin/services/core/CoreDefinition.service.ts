@@ -1,100 +1,75 @@
 import {Http} from '@angular/http';
 import {Injectable} from '@angular/core';
+import {Observable, BehaviorSubject} from 'rxjs';
+import {ConfigService} from '../config/config.service';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs';
 import 'rxjs/add/observable/of';
 
 @Injectable()
 export class CoreDefinitionService {
 
-    public definitions: any;
+  public definitions: BehaviorSubject<any>;
 
-    constructor(private http: Http) {}
+  constructor(private http: Http, private configService: ConfigService) {
+    this.definitions = new BehaviorSubject({});
+  }
 
-    /**
-     * Get the CoreDefinition, if it exists from Localstorage, if not from HTTP
-     *
-     * @param {string} url
-     *
-     * @returns {Observable}
-     */
-    getCoreDefinition(url) {
-        let definition;
+  /**
+   * load core api definitions
+   */
+  loadDefinitions() {
+    this.getDefinitions().subscribe(definitions => {
+      let definitionList: any = {};
 
-        this.getCacheCoreDefinition().subscribe(res => {
-        if (res === null) {
-            definition = this.fetchCoreDefinition(url);
-            return this.setCacheCoreDefinition(definition);
+      for (let key in definitions) {
+        const value = definitions[key];
+        if (typeof value === 'object'
+          && !(value instanceof String)) {
+          if (value.hasOwnProperty('@id')) {
+            this.add(key, value['@id'], definitionList);
+          }
+        } else {
+          this.add(key, value, definitionList);
         }
-          });
-        this.definitions = this.getCacheCoreDefinition();
+      }
 
-        return this.definitions;
+      localStorage.setItem('definitions', JSON.stringify(definitionList));
+      this.definitions.next(definitionList);
+    });
+  }
+
+  /**
+   * Get local definition if exist or remote one
+   *
+   * @returns {Observable<any>}
+   */
+  getDefinitions(): Observable<any> {
+    let definitions: any;
+
+    if ((definitions = localStorage.getItem('definitions')) !== null) {
+      return Observable.of(JSON.parse(definitions));
     }
 
-    /**
-     * get the Definition from url
-     *
-     * @param {string} url
-     *
-     * @returns {Observable}
-     */
-    fetchCoreDefinition(url): Observable<any> {
-        let coreObject: Object = {};
-        return this.http.get(url)
-         .map(res => res.json())
-         .map(res => res['@context'])
-         .map(res => {
-             for (let key in res) {
-                let value = res[key];
-                 if (typeof value === 'object'
-                     && !(value instanceof String)
-                     && value.hasOwnProperty('@id')) {
-                     value = value['@id'];
-                }
-                 this.add(key, value, coreObject);
-             }
-             return coreObject;
-         });
+    return this.http.get(this.configService.api.definitionUrl)
+      .map(res => res.json())
+      .map(res => res['@context']);
+  }
 
-    }
-    /**
-     * Write CoreDefinition to LocalStorage
-     *
-     * @param {Observable} definitions
-     *
-     * @returns void
-     */
-    setCacheCoreDefinition(definitions: Observable<any>) {
-        definitions.subscribe(res => localStorage.setItem('definition', JSON.stringify(res)));
-        return definitions;
-    }
-
-    /**
-     * Get CoreDefinition from LocalStorage
-     *
-     * @returns {Object}
-     */
-    getCacheCoreDefinition() {
-        let localDef = localStorage.getItem('definition');
-        return Observable.of(localDef);
-    }
-
-    /**
-     * Write definition to object
-     *
-     * @param {string} key
-     * @param {string} value
-     * @param {Object} value
-     *
-     * @returns {Object}
-     */
-    add(key, value, object) {
-        Object.defineProperty(object, key, {
-            value: value,
-            writable: false,
-            enumerable: true
-        });
-    }
+  /**
+   * Write definition to object
+   *
+   * @param {string} key
+   * @param {string} value
+   * @param {any} value
+   *
+   * @returns {any}
+   */
+  add(key: string, value: string, object: any) {
+    Object.defineProperty(object, key, {
+      value: value,
+      writable: false,
+      enumerable: true
+    });
+  }
 
 }
