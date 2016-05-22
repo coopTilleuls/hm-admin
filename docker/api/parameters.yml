@@ -1,0 +1,15 @@
+parameters:
+    database_host: mysql
+    database_port: null
+    database_name: api-platform
+    database_user: api-platform
+    database_password: api-platform
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: ThisTokenIsNotSoSecretChangeIt
+    cors_allow_origin: 'http://.*'
+    api_name: 'Your API name'
+    api_description: 'The full description of your API'
+

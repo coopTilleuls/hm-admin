@@ -1,6 +1,6 @@
 export default {
   api: {
-    baseUrl: 'http://www.markus-lanthaler.com/hydra/event-api/'
+    baseUrl: 'http://dockerhost:60000/'
   }
 
 };
