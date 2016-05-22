@@ -1,7 +1,8 @@
 import {beforeEachProviders, describe, expect, it, inject} from '@angular/core/testing';
-import {HmAdminComponent} from './hm-admin.component.ts';
+import {HmAdminComponent} from './hm-admin.component';
+import {ConfigService} from './services/config/config.service';
 
-beforeEachProviders(() => [HmAdminComponent]);
+beforeEachProviders(() => [HmAdminComponent, ConfigService]);
 
 describe('App: HmAdmin', () => {
 

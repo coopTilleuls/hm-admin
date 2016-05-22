@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>hm-admin</title>
-    <script src="vendor/es6-shim/es6-shim.js"></script>
-    <script src="vendor/reflect-metadata/Reflect.js"></script>
-    <script src="vendor/systemjs/dist/system.src.js"></script>
-    <script src="vendor/zone.js/dist/zone.js"></script>
-    <script src="vendor/@angular/core/index.js"></script>
-    <script>
-        System.config({
-            map: {
-                '@angular': 'vendor/@angular',
-                'rxjs': 'vendor/rxjs',
-                'hm-admin':'hm-admin',
-                'admin':'exemples/admin'
-            },
-            packages: {
-                '../': { defaultExtension: 'js' },
-                '@angular/common': { defaultExtension: 'js', main: 'index.js' },
-                '@angular/compiler': { defaultExtension: 'js', main: 'index.js' },
-                '@angular/core': { defaultExtension: 'js', main: 'index.js' },
-                '@angular/platform-browser': { defaultExtension: 'js', main: 'index.js' },
-                '@angular/platform-browser-dynamic': { defaultExtension: 'js', main: 'index.js' },
-            }
-        });
-        System.import('exemples/admin/admin.js').catch(function (err) {console.error(err);});
-    </script>
+    <meta charset="utf-8">
+    <title>Tst</title>
+    <base href="/">
+    {{content-for 'head'}}
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <app>Loading..</app>
+
+<script src="vendor/es6-shim/es6-shim.js"></script>
+<script src="vendor/reflect-metadata/Reflect.js"></script>
+<script src="vendor/systemjs/dist/system.src.js"></script>
+<script src="vendor/zone.js/dist/zone.js"></script>
+
+<script>
+
+    System.import('system-config.js').then(function () {
+        System.import('app/exemples/admin/admin.js');
+    }).catch(console.error.bind(console));
+</script>
 </body>
 </html>

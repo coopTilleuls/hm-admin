@@ -9,16 +9,15 @@
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noImplicitAny": false,
-    "outDir": "../lib",
+    "outDir": "../dist",
     "rootDir": ".",
     "sourceMap": true,
     "removeComments": true,
     "target": "es5",
     "inlineSources": true
   },
-
   "files": [
-    "main.ts",
+    "app/hm-admin/hm-admin.component.ts",
     "typings.d.ts"
   ]
 }
