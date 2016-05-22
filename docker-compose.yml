@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-    web:
+    "hm-admin":
         build: ./docker/spa
         command: npm start
         working_dir: /app

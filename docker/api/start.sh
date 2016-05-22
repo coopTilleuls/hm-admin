@@ -5,5 +5,5 @@ until mysql -h mysql -u api-platform -papi-platform -e ";" ; do
 done
 
 
-php bin/console doctrine:schema:update -f
+php bin/console doctrine:schema:update -f -e prod
 php bin/console server:run 0.0.0.0:60000 -e prod
