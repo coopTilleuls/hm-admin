@@ -4,7 +4,7 @@
     "name": "hm-admin"
   },
   "apps": [
-    {"main": "src/main.ts", "tsconfig": "src/tsconfig.json"}
+    {"main": "src/app/hm-admin/hm-admin.component.ts", "tsconfig": "src/tsconfig.json"}
   ],
   "addons": [],
   "packages": [],
