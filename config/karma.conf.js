@@ -5,6 +5,7 @@ var configuration = {
     require('karma-jasmine'),
     require('karma-coverage'),
     require('karma-chrome-launcher'),
+    require('karma-mocha-reporter')
   ],
   customLaunchers: {
     // chrome setup for travis CI using chromium
@@ -33,7 +34,7 @@ var configuration = {
   preprocessors: {
     'dist/app/**/!(*spec|*mock).js': ['coverage']
   },
-  reporters: ['progress', 'coverage'],
+  reporters: ['mocha', 'coverage'],
   port: 9876,
   colors: true,
   autoWatch: true,
