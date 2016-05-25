@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
-import {IProperty, Property} from './Property';
+import { Property } from './Property';
+import { CoreDefinitionService } from '../core/CoreDefinition.service';
 
 export class Model {
 
@@ -8,24 +9,26 @@ export class Model {
     public properties: Array<Property>;
     public link: Array<any>;
 
-    constructor(datas: any = {}) {
+    constructor(datas: any = {}, private coreDefinitionService: CoreDefinitionService) {
         if (datas) {
-            this.title = datas['hydra:title'] || '';
-            this.description = datas['hydra:description'] || '';
-            this.properties = undefined !== datas['hydra:supportedProperty'] ? this.getProperties(datas['hydra:supportedProperty']) : [];
+          coreDefinitionService.getDefinitions().subscribe( (definitions) => {
+            this.title = datas[definitions.title] || '';
+            this.description = datas[definitions.description] || '';
+            this.properties = undefined !== datas[definitions.supportedProperty] ? this.getProperties(datas[definitions.supportedProperty]) : [];
             this.link = datas.link || ['/List', {model: this.title}];
+          });
         }
     }
 
     /**
      * Extract properties from the a Model's schema
      *
-     * @param {Array<IProperty>} properties
+     * @param {Array<any>} properties
      *
-     * @returns {Array<IProperty>}
+     * @returns {Array<Property>}
      * @private
      */
-    getProperties(properties: Array<IProperty>) {
+    getProperties(properties: Array<any>) {
         return _.map(properties, (property) => new Property(property));
     }
 

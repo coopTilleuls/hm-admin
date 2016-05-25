@@ -1,13 +1,4 @@
-export interface IProperty {
-  'hydra:title': string;
-  'hydra:property': {
-    '@type': string;
-  };
-  'hydra:range': string;
-  'hydra:required': boolean;
-  'hydra:readable': boolean;
-  'hydra:writable': boolean;
-}
+import { CoreDefinitionService } from '../core/CoreDefinition.service';
 
 export class Property {
   public label: string;
@@ -16,15 +7,19 @@ export class Property {
   public required: boolean;
   public readable: boolean;
   public writable: boolean;
+  public coreDefinitionService: CoreDefinitionService;
 
-  constructor(datas: IProperty) {
+  constructor(datas) {
     if (datas) {
-      this.label = datas['hydra:title'] || '';
-      this.type = datas['hydra:property'] ? datas['hydra:property']['@type'] : '';
-      this.range = datas['hydra:range'] || '';
-      this.required = datas['hydra:required'] || false;
-      this.readable = datas['hydra:readable'] || false;
-      this.writable = datas['hydra:writable'] || false;
+      this.coreDefinitionService.getDefinitions().subscribe( (definitions) => {
+        this.label = datas[definitions.title] || '';
+        this.type = datas[definitions.property] ? datas[definitions.property]['@type'] : '';
+        this.range = datas[definitions.range] || '';
+        this.required = datas[definitions.required] || false;
+        this.readable = datas[definitions.readable] || false;
+        this.writable = datas[definitions.writable] || false;
+      });
+
     }
   }
 }
