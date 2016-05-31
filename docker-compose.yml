@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+    "hm-admin":
+        image: node:6
+        command: npm start
+        working_dir: /app
+        ports:
+            - "4200:4200"
+            - "49152:49152" # livereload
+        volumes:
+            - ".:/app"
+            - node_modules:/app/node_modules
+
+    api:
+        build: ./docker/api
+        ports:
+            - "60000:60000"
+        links:
+            - mysql:mysql
+        logging:
+            driver: none
+
+    mysql:
+        image: mysql:5
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: api-platform
+            MYSQL_PASSWORD: api-platform
+            MYSQL_DATABASE: api-platform
+        volumes:
+            - mysql_data:/var/lib/mysql
+        logging:
+            driver: none
+
+volumes:
+    node_modules: ~
+    mysql_data: ~
