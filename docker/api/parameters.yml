@@ -1,0 +1,15 @@
+parameters:
+    database_host: mysql
+    database_port: null
+    database_name: api-platform
+    database_user: api-platform
+    database_password: api-platform
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: ThisTokenIsNotSoSecretChangeItButWhatIfIDont
+    cors_allow_origin: '*'
+    api_name: 'HM-ADMIN test against API'
+    api_description: 'One purpose: serve Hydra stuff'
+
