@@ -13,6 +13,7 @@ install:
   - npm install
 
 script:
+  - cp src/app/exemples/admin/configuration.ts.dist src/app/exemples/admin/configuration.ts
   - ng test --watch false
 
 after_script:
