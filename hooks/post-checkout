@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+var configDiff = require('./configDiff.js');
+configDiff();

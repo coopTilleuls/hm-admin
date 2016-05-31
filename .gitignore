@@ -26,3 +26,7 @@ testem.log
 
 #System Files
 .DS_Store
+
+# Configuration
+/src/app/exemples/admin/.configuration.ts.tmp
+/src/app/exemples/admin/configuration.ts
