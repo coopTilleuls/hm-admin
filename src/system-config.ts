@@ -7,6 +7,7 @@ const map: any = {
 
 /** User packages configuration. */
 const packages: any = {
+  'rxjs': { main: 'Rx' }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +25,6 @@ const barrels: string[] = [
   '@angular/platform-browser-dynamic',
 
   // Thirdparty barrels.
-  'rxjs',
 
   // App specific barrels.
   'app',
