@@ -118,7 +118,9 @@ describe('Core Definition Service', () => {
       })
     }));
 
-    it('should dispatch context api definitions', async(inject([CoreDefinitionService, MockBackend, ConfigService], (cds, api, config) => {
+    it('should dispatch context api definitions', async(
+      inject([CoreDefinitionService, MockBackend, ConfigService], 
+        (cds, api, config) => {
       spyOn(localStorage, 'getItem').and.returnValue(null);
 
       api.connections.subscribe(c => {
@@ -139,7 +141,7 @@ describe('Core Definition Service', () => {
       obs.subscribe(definitions => {
         expect(definitions.property).toEqual('hydra:property');
         expect(definitions.fakeValue).toBeUndefined();
-      })
+      });
     })));
 
   });

@@ -7,7 +7,8 @@ const map: any = {
 
 /** User packages configuration. */
 const packages: any = {
-  'rxjs': { main: 'Rx' }
+  'rxjs': { main: 'Rx' },
+  'lodash': { main: 'lodash'}
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +45,8 @@ declare var System: any;
 System.config({
   map: {
     '@angular': 'vendor/@angular',
-    'rxjs': 'vendor/rxjs'
+    'rxjs': 'vendor/rxjs',
+    'lodash': 'vendor/lodash'
   },
   packages: cliSystemConfigPackages
 });
