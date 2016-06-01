@@ -1,0 +1,16 @@
+@import "../../../core/style/default-theme";
+@import "../../../core/style/theme-functions";
+
+header {
+  background: md-color($md-primary);
+  color: md-color($md-dark-theme-foreground, text);
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  button {
+    margin: 8px; padding: 8px; min-width: auto;
+    line-height: 1em;
+  }
+}

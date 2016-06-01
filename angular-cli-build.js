@@ -12,7 +12,8 @@ module.exports = function(defaults) {
       'reflect-metadata/*.js',
       'rxjs/**/*.js',
       '@angular/**/*.js',
-      'lodash/**/*.js'
+      'lodash/**/*.js',
+      '@angular2-material/**/*'
     ]
   });
 };
