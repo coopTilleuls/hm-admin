@@ -1,0 +1,29 @@
+@import "../../../core/style/default-theme";
+@import "../../../core/style/theme-functions";
+
+md-sidenav-layout[fullscreen] {
+  top: 58px;
+
+  md-sidenav { min-width: 200px; max-width: 250px; }
+
+  md-list-item {
+    display: block; padding: 0; height: 40px;
+    text-align: left;
+
+    h3, p { margin: 0; }
+    p {
+      transform: translate3d(0, -200%, 0); opacity: 0; transition: all 200ms linear;
+      font-size: rem(1.2); line-height: 1; color: md-color($md-foreground, secondary-text);
+    }
+
+    &.router-link-active,
+    &:hover {
+      background-color: transparent;
+      color: md-color($md-primary, 300);
+
+      p { opacity: 1; transform: translate3d(0, -80%, 0); }
+    }
+    &.router-link-active h3 { font-weight: bold; }
+
+  }
+}
