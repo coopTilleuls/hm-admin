@@ -30,3 +30,4 @@ testem.log
 # Configuration
 /src/app/exemples/admin/.configuration.ts.tmp
 /src/app/exemples/admin/configuration.ts
+docker-compose.override.yml
