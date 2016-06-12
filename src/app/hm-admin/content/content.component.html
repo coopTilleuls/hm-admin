@@ -1,0 +1,14 @@
+<md-sidenav-layout fullscreen>
+  <md-sidenav #left>
+    <md-list>
+      <md-list-item md-button *ngFor="let model of models" [routerLink]="model.link" (click)="closeSidenav()">
+        <h3 md-line>{{model.title}}</h3>
+        <p *ngIf="model.description" md-line class="description">{{model.description}}</p>
+      </md-list-item>
+    </md-list>
+  </md-sidenav>
+
+  <section class="app-content">
+    <router-outlet></router-outlet>
+  </section>
+</md-sidenav-layout>
