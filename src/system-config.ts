@@ -3,13 +3,28 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+  '@angular2-material': 'vendor/@angular2-material',
+  'lodash': 'vendor/lodash'
 };
 
 /** User packages configuration. */
 const packages: any = {
-  'rxjs': { main: 'Rx' },
+  'rxjs': { main: 'Rx'},
   'lodash': { main: 'lodash'}
 };
+
+// put the names of any of your Material components here
+const materialPkgs:string[] = [
+  'button',
+  'core',
+  'icon',
+  'list',
+  'sidenav'
+];
+
+materialPkgs.forEach((pkg) => {
+  packages[`@angular2-material/${pkg}`] = {main: `${pkg}.js`};
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************
@@ -30,6 +45,11 @@ const barrels: string[] = [
   // App specific barrels.
   'app',
   'app/shared',
+  'app/header',
+  'app/hm-admin/header',
+  'app/hm-admin/content',
+  'app/hm-admin/+home',
+  'app/hm-admin/+list',
   /** @cli-barrel */
 ];
 
@@ -45,8 +65,7 @@ declare var System: any;
 System.config({
   map: {
     '@angular': 'vendor/@angular',
-    'rxjs': 'vendor/rxjs',
-    'lodash': 'vendor/lodash'
+    'rxjs': 'vendor/rxjs'
   },
   packages: cliSystemConfigPackages
 });

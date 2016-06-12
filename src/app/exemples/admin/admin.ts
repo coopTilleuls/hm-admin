@@ -1,13 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {ROUTER_PROVIDERS, Routes} from '@angular/router';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import configuration from './configuration';
-import {HmAdminComponent} from '../../hm-admin/hm-admin.component';
+import {HmAdminComponent, HmAdminRoutes} from '../../hm-admin/hm-admin.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'app',
   directives: [HmAdminComponent],
-  template: `<hm-admin-app [config]='config'></hm-admin-app>`
+  template: `<hm-admin-app [config]='config'></hm-admin-app>`,
+  styleUrls: ['admin.css'],
+  encapsulation: ViewEncapsulation.None
 })
+@Routes(HmAdminRoutes)
 export class App {
   public config: Configuration;
 
@@ -23,4 +28,6 @@ export interface Configuration {
     definitionUrl: string
   };
 }
-bootstrap(App);
+bootstrap(App, [
+  ROUTER_PROVIDERS
+]);

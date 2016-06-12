@@ -59,7 +59,7 @@ import {Model} from '../models/Model';
         expect(model.properties.length).toBe(0);
         expect(Array.isArray(model.link)).toBeTruthy();
         expect(model.link.length).toBe(2);
-        expect(model.link).toContain('/List');
+        expect(model.link).toContain('/list/');
       });
 
     });
