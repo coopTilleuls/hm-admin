@@ -8,7 +8,8 @@ RUN composer  create-project --no-scripts --no-dev api-platform/api-platform ./ 
 RUN  composer require api-platform/schema-generator
 
 COPY ./parameters.yml ./app/config/parameters.yml
-COPY ./schema.yml ./app/config/schema.yml
+COPY ./schema.yml     ./app/config/schema.yml
+COPY ./routing.yml    ./app/config/routing.yml
 
 RUN php ./vendor/bin/schema generate-types src/ app/config/schema.yml
 
