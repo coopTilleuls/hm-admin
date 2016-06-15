@@ -13,8 +13,10 @@ import {Property} from '../models/Property';
       it('should set properties', () => {
         let property = new Property({
           'hydra:title': 'firstName',
-          'hydra:property': {'@type': 'rdf:Property'},
-          'hydra:range': 'xmls:string',
+          'hydra:property': {
+            '@type': 'rdf:Property',
+            'range': 'xmls:string'
+          },
           'hydra:required': true,
           'hydra:readable': true,
           'hydra:writable': true
@@ -22,7 +24,7 @@ import {Property} from '../models/Property';
         {
             'title': 'hydra:title',
             'property': 'hydra:property',
-            'range':  'hydra:range',
+            'range':  'rdfs:range',
             'required': 'hydra:required',
             'readable': 'hydra:readable',
             'writable':  'hydra:writable'
@@ -40,7 +42,6 @@ import {Property} from '../models/Property';
         let property = new Property({
           'hydra:title': undefined,
           'hydra:property': undefined,
-          'hydra:range': undefined,
           'hydra:required': undefined,
           'hydra:readable': undefined,
           'hydra:writable': undefined
@@ -48,7 +49,7 @@ import {Property} from '../models/Property';
         {
           'title': 'hydra:title',
           'property': 'hydra:property',
-          'range':  'hydra:range',
+          'range':  'rdfs:range',
           'required': 'hydra:required',
           'readable': 'hydra:readable',
           'writable':  'hydra:writable'
