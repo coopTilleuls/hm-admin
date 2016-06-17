@@ -10,7 +10,7 @@ export class Property {
     if (datas) {
       this.label = datas[definition.title] || '';
       this.type = datas[definition.property] ? datas[definition.property]['@type'] : '';
-      this.range = datas[definition.range] || '';
+      this.range = datas[definition.property] ? datas[definition.property]['range'] : '';
       this.required = datas[definition.required] || false;
       this.readable = datas[definition.readable] || false;
       this.writable = datas[definition.writable] || false;
