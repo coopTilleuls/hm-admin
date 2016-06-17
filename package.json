@@ -1,6 +1,6 @@
 {
   "name": "hm-admin",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "license": "MIT",
   "description": "hm-admin is an angular2 component which help you to build backoffice automatically for an hypermedia API",
   "main": "dist/main.js",
