@@ -1,0 +1,10 @@
+@import "../../../core/style/default-theme";
+@import "../../../core/style/theme-functions";
+
+md-content { background: transparent; }
+
+h1 { font-size: 3.4rem; color: md-color($md-primary); }
+
+.data-list {
+  display: block; background-color: md-color($md-background, card); border-radius: 4px;
+}

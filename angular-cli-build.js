@@ -13,7 +13,8 @@ module.exports = function(defaults) {
       'rxjs/**/*.js',
       '@angular/**/*.js',
       'lodash/**/*.js',
-      '@angular2-material/**/*'
+      'ng2-material/**/*.*',
+      '@angular2-material/**/*.*'
     ]
   });
 };

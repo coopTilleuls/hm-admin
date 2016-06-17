@@ -11,9 +11,9 @@ export class Property {
       this.label = datas[definition.title] || '';
       this.type = datas[definition.property] ? datas[definition.property]['@type'] : '';
       this.range = datas[definition.property] ? datas[definition.property]['range'] : '';
-      this.required = datas[definition.required] || false;
-      this.readable = datas[definition.readable] || false;
-      this.writable = datas[definition.writable] || false;
+      this.required = datas[definition.required] !== undefined ? datas[definition.required] : false;
+      this.readable = datas[definition.readable] !== undefined ? datas[definition.readable] : true;
+      this.writable = datas[definition.writable] !== undefined ? datas[definition.writable] : false;
     }
   }
 }
