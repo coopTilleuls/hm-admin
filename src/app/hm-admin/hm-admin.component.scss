@@ -1,0 +1,11 @@
+@import "../../core/style/default-theme";
+@import "../../core/style/theme-functions";
+
+@import "/vendor/ng2-material/ng2-material.css";
+@import "/vendor/ng2-material/font/font.css";
+
+hm-admin-app {
+  position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: md-color($md-background, app-bar);
+}
+
+md-content { background-color: transparent; }

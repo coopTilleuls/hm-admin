@@ -1,6 +1,13 @@
-export default {
+let config: any =  {
   api: {
     baseUrl: 'http://dockerhost:60000',
     definitionUrl: 'https://www.w3.org/ns/hydra/core'
-  }
+  }/*,
+  Person: {
+    List: {
+      displayProperties: ['givenName', 'familyName', 'telephone']
+    }
+  }*/
 };
+
+export default config;

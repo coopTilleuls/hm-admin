@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   moduleId: module.id,
@@ -9,11 +9,4 @@ import { Component, OnInit } from '@angular/core';
     </p>
   `
 })
-export class HomeComponent implements OnInit {
-
-  constructor() {}
-
-  ngOnInit() {
-  }
-
-}
+export class HomeComponent {}
