@@ -1,23 +1,28 @@
-import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { ConfigService } from '../config/Config.service';
+import { SchemaService } from '../schema/schema.service';
+import { EntryPoint } from '../models/EntryPoint';
+import { entrypointHelper } from '../../helper/entrypointHelper';
+import { stringHelper } from '../../helper/stringHelper';
+import { pagedCollection } from '../models/pagedCollection';
+import { CoreDefinitionService } from '../core/CoreDefinition.service';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import {ConfigService} from '../config/Config.service';
-import {SchemaService} from '../schema/schema.service';
-import {EntryPoint} from '../models/EntryPoint';
-import {entrypointHelper} from '../../helper/entrypointHelper';
-import {stringHelper} from '../../helper/stringHelper';
-import {PagedCollection} from '../models/PagedCollection';
-import {CoreDefinitionService} from '../core/CoreDefinition.service';
-import {Observable, BehaviorSubject} from 'rxjs';
+import 'rxjs/add/operator/do';
 
+import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class APIService {
 
   public entrypoints: Array<EntryPoint> = [];
 
-  constructor(private http: Http, private config: ConfigService, private schema: SchemaService, private coreDefinitionService: CoreDefinitionService) {
+  constructor(private http: Http,
+              private config: ConfigService,
+              private schema: SchemaService,
+              private coreDefinitionService: CoreDefinitionService) {
     this.schema.entrypoints.subscribe(entrypoints => this.entrypoints = entrypoints);
   }
 
@@ -28,10 +33,8 @@ export class APIService {
    *
    * @returns {Observable<PagedCollection|null>}
    */
-  getCollectionByUrl(path: string, definition: any) {
-    let query = this.http.get(path)
-      .map(data => data.json())
-      .map(collection => new PagedCollection(collection, definition));
+  getCollectionByUrl(path: string) {
+    let query = this.http.get(path);
 
     query.subscribe(
       null,
@@ -40,13 +43,17 @@ export class APIService {
       }
     );
 
-    return query;
+    return query
+      .map(data => data.json())
+      .map(collection => pagedCollection(collection, this.coreDefinitionService))
+      .switchMap(collection => collection);
   }
 
   /**
    * Get collection from API
    *
    * @param {string} modelName
+   *
    * @returns {Observable<PagedCollection|null>}
    */
   getCollection(modelName: string = '') {
@@ -56,8 +63,6 @@ export class APIService {
       throw Error(`Can't find an entrypoint for ${modelName} in ${this.entrypoints}`);
     }
 
-    return this.coreDefinitionService.getDefinitions().mergeMap((definition) => {
-      return this.getCollectionByUrl(this.config.api.baseUrl + entrypoint.url, definition);
-    });
+    return this.getCollectionByUrl(this.config.get('api.baseUrl') + entrypoint.url);
   }
 }

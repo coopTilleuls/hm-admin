@@ -1,3 +1,16 @@
-<p>
-  list works!
-</p>
+<h1>List of {{ model?.title }}</h1>
+
+<md-card class="data-list">
+  <md-data-table fullscreen>
+    <thead>
+    <tr md-data-table-header-selectable-row>
+      <th *ngFor="let property of properties">{{ property.label }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let entity of collection?.members">
+      <td *ngFor="let property of properties">{{ entity | property:property }}</td>
+    </tr>
+    </tbody>
+  </md-data-table>
+</md-card>

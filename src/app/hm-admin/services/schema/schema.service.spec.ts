@@ -8,8 +8,8 @@ import {
   beforeEachProviders,
   tick
 } from '@angular/core/testing';
-import {MockBackend} from '@angular/http/testing';
-import {provide} from '@angular/core';
+import { MockBackend } from '@angular/http/testing';
+import { provide } from '@angular/core';
 import {
   Http,
   ConnectionBackend,
@@ -17,71 +17,69 @@ import {
   Response,
   ResponseOptions
 } from '@angular/http';
-import {ConfigService} from '../config/Config.service';
-import {SchemaService} from './schema.service';
-import {BehaviorSubject} from 'rxjs';
+import { ConfigService } from '../config/Config.service';
+import { SchemaService } from './schema.service';
+import { BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/filter';
-import {EntryPoint} from '../models/EntryPoint';
+import { EntryPoint } from '../models/EntryPoint';
 
 
-  describe('Schema service', () => {
+describe('Schema service', () => {
 
-    beforeEachProviders(() => {
-      return [
-        BaseRequestOptions,
-        MockBackend,
-        SchemaService,
-        provide(ConfigService, {
-          useValue: {
-            api: {
-              baseUrl: 'http://localhost:8000'
-            }
-          }
-        }),
-        provide(Http, {
-          useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          }, deps: [MockBackend, BaseRequestOptions]
-        })
-      ];
-    });
+  beforeEachProviders(() => {
+    return [
+      BaseRequestOptions,
+      MockBackend,
+      SchemaService,
+      provide(ConfigService, {
+        useValue: {
+          get: function () { return 'http://localhost:8000'; }
+        }
+      }),
+      provide(Http, {
+        useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
+          return new Http(backend, defaultOptions);
+        }, deps: [MockBackend, BaseRequestOptions]
+      })
+    ];
+  });
 
 
-    describe('#constructor', () => {
+  describe('#constructor', () => {
 
-      it('should init schema observable', inject([SchemaService], (schemaService) => {
-        schemaService.schema.subscribe(schema => {
-          expect(schema).toBeNull();
-        });
-      }));
+    it('should init schema observable', inject([SchemaService], (schemaService) => {
+      schemaService.schema.subscribe(schema => {
+        expect(schema).toBeNull();
+      });
+    }));
 
-      it('should init entrypoints observable', inject([SchemaService], (schemaService) => {
-        schemaService.entrypoints.subscribe(schema => {
-          expect(Array.isArray(schema)).toBeTruthy();
-          expect(schema.length).toBe(0);
-        });
-      }));
+    it('should init entrypoints observable', inject([SchemaService], (schemaService) => {
+      schemaService.entrypoints.subscribe(schema => {
+        expect(Array.isArray(schema)).toBeTruthy();
+        expect(schema.length).toBe(0);
+      });
+    }));
 
-    });
+  });
 
-    describe('load', () => {
+  describe('load', () => {
 
-      it('should load api definition', inject([SchemaService], (schemaService) => {
-        spyOn(schemaService, 'loadRoot');
-        spyOn(schemaService, 'loadDocumentation');
+    it('should load api definition', inject([SchemaService], (schemaService) => {
+      spyOn(schemaService, 'loadRoot');
+      spyOn(schemaService, 'loadDocumentation');
 
-        schemaService.load();
+      schemaService.load();
 
-        expect(schemaService.loadRoot).toHaveBeenCalled();
-        expect(schemaService.loadDocumentation).toHaveBeenCalled();
-      }));
+      expect(schemaService.loadRoot).toHaveBeenCalled();
+      expect(schemaService.loadDocumentation).toHaveBeenCalled();
+    }));
 
-    });
+  });
 
-    describe('loadRoot', () => {
+  describe('loadRoot', () => {
 
-      it('should load api definition', inject([SchemaService, MockBackend],
-        fakeAsync((schemaService, mockBackend) => {
+    it('should load api definition', inject([SchemaService, MockBackend],
+      fakeAsync((schemaService, mockBackend) => {
         mockBackend.connections.subscribe(c => {
           expect(c.request.url).toBe('http://localhost:8000');
           let response = new ResponseOptions({
@@ -106,8 +104,8 @@ import {EntryPoint} from '../models/EntryPoint';
         schemaService.loadRoot();
       })));
 
-      it('should throw Error if API is unreachable', inject([SchemaService, MockBackend],
-        fakeAsync((schemaService, mockBackend) => {
+    it('should throw Error if API is unreachable', inject([SchemaService, MockBackend],
+      fakeAsync((schemaService, mockBackend) => {
         mockBackend.connections.subscribe(c => {
           c.mockError();
         });
@@ -115,12 +113,12 @@ import {EntryPoint} from '../models/EntryPoint';
         expect(() => schemaService.loadRoot()).toThrow();
       })));
 
-    });
+  });
 
-    describe('loadDocumentation', () => {
+  describe('loadDocumentation', () => {
 
-      it('should load operations and schema', inject([SchemaService, MockBackend],
-        fakeAsync((schemaService, mockBackend) => {
+    it('should load operations and schema', inject([SchemaService, MockBackend],
+      fakeAsync((schemaService, mockBackend) => {
         mockBackend.connections.subscribe(c => {
           expect(c.request.url).toBe('http://localhost:8000/vocab');
           let response = new ResponseOptions({
@@ -153,8 +151,8 @@ import {EntryPoint} from '../models/EntryPoint';
         expect(schemaService.loadSchema).toHaveBeenCalled();
       })));
 
-      it('should throw Error if API is unreachable', inject([SchemaService, MockBackend],
-        fakeAsync((schemaService, mockBackend) => {
+    it('should throw Error if API is unreachable', inject([SchemaService, MockBackend],
+      fakeAsync((schemaService, mockBackend) => {
         mockBackend.connections.subscribe(c => {
           c.mockError();
         });
@@ -164,12 +162,12 @@ import {EntryPoint} from '../models/EntryPoint';
           'supportedClass': 'hydra:supportedclass'
         })).toThrow();
       })));
-    });
+  });
 
-    describe('loadCollectionOperations', () => {
+  describe('loadCollectionOperations', () => {
 
-      it('should load collection operations for each entrypoint', inject([SchemaService],
-        (schemaService) => {
+    it('should load collection operations for each entrypoint', inject([SchemaService],
+      (schemaService) => {
         let index = 0;
         schemaService.entrypoints
           .filter(entrypoints => 0 < entrypoints.length)
@@ -203,22 +201,22 @@ import {EntryPoint} from '../models/EntryPoint';
           ]
         });
         schemaService.loadCollectionOperations(observable,
-        {
-          'property': 'hydra:property',
-          'supportedProperty': 'hydra:supportedProperty',
-          'supportedOperation': 'hydra:supportedOperation',
-          'PagedCollection': 'hydra:PagedCollection',
-          'method': 'hydra:method',
-          'title': 'hydra:title'
-        });
+          {
+            'property': 'hydra:property',
+            'supportedProperty': 'hydra:supportedProperty',
+            'supportedOperation': 'hydra:supportedOperation',
+            'PagedCollection': 'hydra:PagedCollection',
+            'method': 'hydra:method',
+            'title': 'hydra:title'
+          });
       }));
 
-    });
+  });
 
-    describe('loadSingleOperations', () => {
+  describe('loadSingleOperations', () => {
 
-      it('should load single operations for each entrypoint',  async(inject([SchemaService],
-        (schemaService) => {
+    it('should load single operations for each entrypoint', async(inject([SchemaService],
+      (schemaService) => {
         schemaService.entrypoints
           .filter(entrypoints => 0 < entrypoints.length)
           .subscribe(entrypoints => {
@@ -231,27 +229,26 @@ import {EntryPoint} from '../models/EntryPoint';
 
         let observable = new BehaviorSubject({
           'hydra:title': 'Person',
-          'hydra:supportedOperation':
-            [
-            { 'hydra:method': 'GET'},
-            { 'hydra:method': 'POST'},
-            { 'hydra:method': 'DELETE'}
+          'hydra:supportedOperation': [
+            {'hydra:method': 'GET'},
+            {'hydra:method': 'POST'},
+            {'hydra:method': 'DELETE'}
           ]
         });
         schemaService.loadSingleOperations(observable, {
           'title': 'hydra:title',
-          'supportedOperation' : 'hydra:supportedOperation',
+          'supportedOperation': 'hydra:supportedOperation',
           'PagedCollection': 'hydra:PagedCollection',
           'method': 'hydra:method'
         });
       })));
 
-    });
+  });
 
-    describe('loadSchema', () => {
+  describe('loadSchema', () => {
 
-      it('should load title and models',  async(inject([SchemaService],
-        (schemaService) => {
+    it('should load title and models', async(inject([SchemaService],
+      (schemaService) => {
         schemaService.schema
           .filter(schema => null !== schema)
           .subscribe(schema => {
@@ -263,12 +260,12 @@ import {EntryPoint} from '../models/EntryPoint';
         let observable = new BehaviorSubject({});
         schemaService.loadSchema(observable, {
           'title': 'hydra:title',
-          'supportedOperation' : 'hydra:supportedOperation',
+          'supportedOperation': 'hydra:supportedOperation',
           'PagedCollection': 'hydra:PagedCollection',
           'method': 'hydra:method'
         });
       })));
 
-    });
   });
+});
 

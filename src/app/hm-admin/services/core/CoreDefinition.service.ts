@@ -1,9 +1,9 @@
-import {Http} from '@angular/http';
-import {Injectable} from '@angular/core';
-import {Observable, BehaviorSubject} from 'rxjs';
+import { Http } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-import {ConfigService} from '../config/Config.service';
+import { ConfigService } from '../config/Config.service';
 
 @Injectable()
 export class CoreDefinitionService {
@@ -50,7 +50,7 @@ export class CoreDefinitionService {
       return Observable.of(JSON.parse(definitions));
     }
 
-    return this.http.get(this.configService.api.definitionUrl)
+    return this.http.get(this.configService.get('api.definitionUrl'))
       .map(res => res.json())
       .map(res => res['@context']);
   }
