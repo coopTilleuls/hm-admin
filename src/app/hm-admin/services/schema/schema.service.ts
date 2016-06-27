@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
-import {Observable, BehaviorSubject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/share';
-import {ConfigService} from '../config/Config.service';
-import {entrypointHelper} from '../../helper/entrypointHelper';
-import {schemaHelper} from '../../helper/schemaHelper';
-import {EntryPoint} from '../models/EntryPoint';
-import {stringHelper} from '../../helper/stringHelper';
+import { ConfigService } from '../config/Config.service';
+import { entrypointHelper } from '../../helper/entrypointHelper';
+import { schemaHelper } from '../../helper/schemaHelper';
+import { EntryPoint } from '../models/EntryPoint';
+import { stringHelper } from '../../helper/stringHelper';
 import { CoreDefinitionService } from '../core/CoreDefinition.service';
 
 @Injectable()
@@ -42,19 +42,19 @@ export class SchemaService {
    * @private
    */
   loadRoot() {
-    let request: string = this.config.api.baseUrl;
+    let request: string = this.config.get('api.baseUrl');
     let entrypoints = this.http.get(request)
       .map(data => data.json())
       .map(entrypointHelper.filterEntryPoints);
 
     entrypoints.subscribe(
       (entrypoints => {
-        for(let key in entrypoints) {
+        for (let key in entrypoints) {
           let cleanModel = stringHelper.toCamelCase(entrypointHelper.getModelById(key)),
             entrypoint: EntryPoint = entrypointHelper.getEntryPointByModel
             (
-                key,
-                this.availableEntrypoints
+              key,
+              this.availableEntrypoints
             );
           if (undefined === entrypoint) {
             entrypoint = new EntryPoint(cleanModel);
@@ -75,7 +75,7 @@ export class SchemaService {
    * load documentation about the API
    */
   loadDocumentation(definition: any) {
-    let request = [this.config.api.baseUrl, 'vocab'].join('/'),
+    let request = [this.config.get('api.baseUrl'), 'vocab'].join('/'),
       apidoc = this.http.get(request)
         .map(data => data.json())
         .share();
@@ -119,7 +119,10 @@ export class SchemaService {
             this.availableEntrypoints.push(ep);
           }
 
-          let operations: Array<string> = entrypointHelper.getOperations(entrypoint[definition.supportedOperation], definition);
+          let operations: Array<string> = entrypointHelper.getOperations(
+            entrypoint[definition.supportedOperation],
+            definition
+          );
           ep.addOperations(operations);
 
           this.entrypoints.next(this.availableEntrypoints);
@@ -141,7 +144,10 @@ export class SchemaService {
         (entrypoint => {
           let cleanModel = stringHelper.toCamelCase(entrypointHelper.getModelById(entrypoint[definition.title])),
             ep: EntryPoint = entrypointHelper.getEntryPointByModel(cleanModel, this.availableEntrypoints),
-            operations: Array<string> = entrypointHelper.getOperations(entrypoint[definition.supportedOperation], definition);
+            operations: Array<string> = entrypointHelper.getOperations(
+              entrypoint[definition.supportedOperation],
+              definition
+            );
 
           if (undefined === ep) {
             ep = new EntryPoint(cleanModel);

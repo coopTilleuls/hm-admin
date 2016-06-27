@@ -1,11 +1,11 @@
-import {it, describe, expect, inject, beforeEach, beforeEachProviders, async} from '@angular/core/testing';
-import {BaseRequestOptions, Http, ResponseOptions, Response} from '@angular/http';
-import {provide} from '@angular/core';
-import {MockBackend} from '@angular/http/testing';
-import {CoreDefinitionService} from './CoreDefinition.service';
-import {Observable} from 'rxjs';
+import { it, describe, expect, inject, beforeEach, beforeEachProviders, async } from '@angular/core/testing';
+import { BaseRequestOptions, Http, ResponseOptions, Response } from '@angular/http';
+import { provide } from '@angular/core';
+import { MockBackend } from '@angular/http/testing';
+import { CoreDefinitionService } from './CoreDefinition.service';
+import { Observable } from 'rxjs';
 import 'rxjs/add/observable/of';
-import {ConfigService} from '../config/Config.service';
+import { ConfigService } from '../config/Config.service';
 
 describe('Core Definition Service', () => {
 
@@ -14,9 +14,7 @@ describe('Core Definition Service', () => {
       CoreDefinitionService,
       provide(ConfigService, {
         useValue: {
-          api: {
-            definitionUrl: 'http://localhost:8001'
-          }
+          get: function () { return 'http://localhost:8000'; }
         }
       }),
     ];
@@ -91,7 +89,7 @@ describe('Core Definition Service', () => {
     }));
 
   });
-  
+
   describe('getDefinitions', () => {
 
     beforeEachProviders(() => {
@@ -119,30 +117,30 @@ describe('Core Definition Service', () => {
     }));
 
     it('should dispatch context api definitions', async(
-      inject([CoreDefinitionService, MockBackend, ConfigService], 
+      inject([CoreDefinitionService, MockBackend, ConfigService],
         (cds, api, config) => {
-      spyOn(localStorage, 'getItem').and.returnValue(null);
+          spyOn(localStorage, 'getItem').and.returnValue(null);
 
-      api.connections.subscribe(c => {
-        expect(c.request.url).toBe('http://localhost:8001');
-        let response = new ResponseOptions({
-          body: {
-            '@context': {
-              'property': 'hydra:property'
-            },
-            'fakeValue': 'hydra:fakeValue'
-          }
-        });
-        c.mockRespond(new Response(response));
-      });
+          api.connections.subscribe(c => {
+            expect(c.request.url).toBe('http://localhost:8000');
+            let response = new ResponseOptions({
+              body: {
+                '@context': {
+                  'property': 'hydra:property'
+                },
+                'fakeValue': 'hydra:fakeValue'
+              }
+            });
+            c.mockRespond(new Response(response));
+          });
 
-      const obs = cds.getDefinitions();
+          const obs = cds.getDefinitions();
 
-      obs.subscribe(definitions => {
-        expect(definitions.property).toEqual('hydra:property');
-        expect(definitions.fakeValue).toBeUndefined();
-      });
-    })));
+          obs.subscribe(definitions => {
+            expect(definitions.property).toEqual('hydra:property');
+            expect(definitions.fakeValue).toBeUndefined();
+          });
+        })));
 
   });
 
@@ -154,14 +152,14 @@ describe('Core Definition Service', () => {
       definitions = {};
     });
 
-    it('should define an enumerable property', inject([CoreDefinitionService], (cds)  => {
+    it('should define an enumerable property', inject([CoreDefinitionService], (cds) => {
       cds.add('property', 'hydra:property', definitions);
 
       expect(definitions.property).toEqual('hydra:property');
       expect(definitions.propertyIsEnumerable('property')).toBeTruthy();
     }));
 
-    it('should define an unwritable property', inject([CoreDefinitionService], (cds)  => {
+    it('should define an unwritable property', inject([CoreDefinitionService], (cds) => {
       cds.add('property', 'hydra:property', definitions);
 
       expect(() => {

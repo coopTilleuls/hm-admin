@@ -5,13 +5,14 @@ import {
   expect,
   it,
   inject,
+  async
 } from '@angular/core/testing';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { MdIconRegistry } from '@angular2-material/icon';
 import { HeaderComponent } from './header.component';
-import {SidenavService} from "../content/sidenav.service";
-import {MdIconRegistry} from '@angular2-material/icon';
+import { SidenavService } from '../content/sidenav.service';
 
 describe('Component: Header', () => {
   let builder: TestComponentBuilder;
@@ -26,23 +27,24 @@ describe('Component: Header', () => {
   }));
 
   it('should inject the component', inject([HeaderComponent],
-      (component: HeaderComponent) => {
-    expect(component).toBeTruthy();
-  }));
+    (component: HeaderComponent) => {
+      expect(component).toBeTruthy();
+    }
+  ));
 
-  it('should create the component', inject([], () => {
+  it('should create the component', async(inject([], () => {
     return builder.createAsync(HeaderComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
         let query = fixture.debugElement.query(By.directive(HeaderComponent));
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });
-  }));
+  })));
 });
 
 @Component({
   selector: 'test',
-  template: `
+  template: ` 
     <app-header></app-header>
   `,
   directives: [HeaderComponent]

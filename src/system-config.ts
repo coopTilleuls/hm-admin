@@ -4,18 +4,21 @@
 /** Map relative paths to URLs. */
 const map: any = {
   '@angular2-material': 'vendor/@angular2-material',
-  'lodash': 'vendor/lodash'
+  'lodash': 'vendor/lodash',
+  'ng2-material': 'vendor/ng2-material'
 };
 
 /** User packages configuration. */
 const packages: any = {
   'rxjs': { main: 'Rx'},
-  'lodash': { main: 'lodash'}
+  'lodash': { main: 'lodash'},
+  'ng2-material': { main: 'index'}
 };
 
 // put the names of any of your Material components here
 const materialPkgs:string[] = [
   'button',
+  'checkbox',
   'core',
   'icon',
   'list',
