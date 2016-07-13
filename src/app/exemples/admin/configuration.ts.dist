@@ -5,7 +5,8 @@ let config: any =  {
   }/*,
   Person: {
     List: {
-      displayProperties: ['givenName', 'familyName', 'telephone']
+      displayProperties: ['givenName', 'familyName', 'telephone'],
+      itemsPerPageOptions: [5, 15, 100]
     }
   }*/
 };

@@ -7,7 +7,8 @@ import { entrypointHelper } from '../../helper/entrypointHelper';
 import { stringHelper } from '../../helper/stringHelper';
 import { pagedCollection } from '../models/pagedCollection';
 import { CoreDefinitionService } from '../core/CoreDefinition.service';
-import { Observable } from 'rxjs';
+import { urlHelper } from '../../helper/urlHelper';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/do';
@@ -33,8 +34,8 @@ export class APIService {
    *
    * @returns {Observable<PagedCollection|null>}
    */
-  getCollectionByUrl(path: string) {
-    let query = this.http.get(path);
+  getCollectionByUrl(path: string, params: any = {}) {
+    let query = this.http.get(this.config.get('api.baseUrl') + urlHelper.getPath(path, params));
 
     query.subscribe(
       null,
@@ -53,16 +54,18 @@ export class APIService {
    * Get collection from API
    *
    * @param {string} modelName
+   * @param {any} params
    *
    * @returns {Observable<PagedCollection|null>}
    */
-  getCollection(modelName: string = '') {
+  getCollectionByModel(modelName: string = '', params: any = {}) {
     let cleanName: string = stringHelper.toCamelCase(modelName),
       entrypoint: EntryPoint = entrypointHelper.getEntryPointByModel(cleanName, this.entrypoints);
+
     if (undefined === entrypoint || '' === modelName) {
       throw Error(`Can't find an entrypoint for ${modelName} in ${this.entrypoints}`);
     }
 
-    return this.getCollectionByUrl(this.config.get('api.baseUrl') + entrypoint.url);
+    return this.getCollectionByUrl(entrypoint.url, params);
   }
 }

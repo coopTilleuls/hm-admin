@@ -1,5 +1,7 @@
 import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class MockAPIService {
 
   /**
@@ -19,7 +21,7 @@ export class MockAPIService {
    * @param {string} modelName
    * @returns {Observable<PagedCollection|null>}
    */
-  getCollection(modelName: string = '') {
+  getCollectionByModel(modelName: string = '') {
     return this.getCollectionByUrl('');
   }
 }
