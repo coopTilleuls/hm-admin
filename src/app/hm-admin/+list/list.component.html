@@ -1,9 +1,13 @@
 <h1>List of {{ model?.title }}</h1>
 
 <md-card class="data-list">
+  <md-pagination
+    [model]="collection"
+    [items-per-page-options]="itemsPerPageOptions"
+    (on-pagination-change)="paginationChange($event)"></md-pagination>
   <md-data-table fullscreen>
     <thead>
-    <tr md-data-table-header-selectable-row>
+    <tr>
       <th *ngFor="let property of properties">{{ property.label }}</th>
     </tr>
     </thead>

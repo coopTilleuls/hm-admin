@@ -7,13 +7,15 @@ import { APIService } from '../services/api/api.service';
 import { PropertyPipe } from '../pipes/property.pipe';
 import { ConfigService } from '../services/config/Config.service';
 import { Property } from '../services/models/Property';
+import { MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS, IPaginationChange } from 'ng2-material/index';
 
 @Component({
   moduleId: module.id,
   selector: 'app-list',
   templateUrl: 'list.component.html',
   styleUrls: ['list.component.css'],
-  providers: [APIService],
+  directives: [MATERIAL_DIRECTIVES],
+  providers: [APIService, MATERIAL_PROVIDERS],
   pipes: [PropertyPipe]
 })
 export class ListComponent implements OnActivate {
@@ -22,7 +24,13 @@ export class ListComponent implements OnActivate {
 
   properties: Property[] = [];
 
-  collection: any;
+  collection: any = {
+    currentPage: 0,
+    totalItems: 0,
+    itemsPerPage: 0
+  };
+
+  itemsPerPageOptions: number[] = [10, 30, 50];
 
   constructor(private schemaService: SchemaService, private api: APIService, private config: ConfigService) {}
 
@@ -37,12 +45,18 @@ export class ListComponent implements OnActivate {
       .subscribe((model: Model) => {
         this.model = model;
         this.extractProperties();
-        this.getCollection();
+        this.getDefaultCollection();
       });
   }
 
   extractProperties() {
-    const availableProps = this.config.get(`${this.model.title}.List.displayProperties`);
+    const itemsPerPageOptions = this.config.get(`${this.model.title}.List.itemsPerPageOptions`),
+      availableProps = this.config.get(`${this.model.title}.List.displayProperties`);
+
+    if (null !== itemsPerPageOptions && Array.isArray(itemsPerPageOptions)) {
+      this.itemsPerPageOptions = itemsPerPageOptions;
+      this.changeItemsPerPageOptions();
+    }
 
     if (null === availableProps) {
       this.properties = this.model.properties;
@@ -67,9 +81,58 @@ export class ListComponent implements OnActivate {
     }
   }
 
-  getCollection() {
-    this.api.getCollection(this.model.title)
-      .subscribe(collection => this.collection = collection);
+  getDefaultCollection() {
+    this.changeCollection(this.api.getCollectionByModel(this.model.title));
+
+  }
+
+  paginationChange(model: IPaginationChange) {
+    if (model.pagination.itemsPerPage) {
+      if (model.pagination.itemsPerPage !== this.collection.itemsPerPage) {
+        this.pageSizeChange(model);
+      } else {
+        this.pageChange(model);
+      }
+    }
+  }
+
+  pageSizeChange(model: IPaginationChange) {
+    this.changeCollection(
+      this.api.getCollectionByUrl(this.collection.firstPage, {itemsPerPage: model.pagination.itemsPerPage})
+    );
+  }
+
+  pageChange(model: IPaginationChange) {
+    if (model.pagination.currentPage > this.collection.currentPage) {
+      this.getNextPage();
+    } else {
+      this.getPreviousPage();
+    }
+  }
+
+  getPreviousPage() {
+    this.changeCollection(this.api.getCollectionByUrl(this.collection.previousPage));
+  }
+
+  getNextPage() {
+    this.changeCollection(this.api.getCollectionByUrl(this.collection.nextPage));
+  }
+
+  changeCollection(observer: any) {
+    observer.subscribe(collection => {
+      this.collection = collection;
+      this.changeItemsPerPageOptions();
+    });
+  }
+
+  changeItemsPerPageOptions() {
+    if (this.collection
+      && this.itemsPerPageOptions.length
+      && this.collection.itemsPerPage !== 0
+      && this.itemsPerPageOptions.indexOf(this.collection.itemsPerPage) === -1 ) {
+      this.itemsPerPageOptions.push(this.collection.itemsPerPage);
+    }
+    this.itemsPerPageOptions.sort((a, b) => a - b);
   }
 
 }

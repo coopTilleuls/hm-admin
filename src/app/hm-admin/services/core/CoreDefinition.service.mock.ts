@@ -21,6 +21,11 @@ export class MockCoreDefinitionService {
   }
 
   /**
+   * load core api definitions
+   */
+  loadDefinitions() {}
+
+  /**
    * Get local definition if exist or remote one
    *
    * @returns {Observable<any>}

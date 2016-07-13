@@ -99,7 +99,7 @@ describe('API service', () => {
           c.mockRespond(new Response(response));
         });
 
-        let query = apiService.getCollectionByUrl('http://localhost:8000/people');
+        let query = apiService.getCollectionByUrl('/people');
         tick();
 
         query.subscribe(collection => {
@@ -118,7 +118,7 @@ describe('API service', () => {
 
   });
 
-  describe('getCollection', () => {
+  describe('getCollectionByModel', () => {
 
     beforeEach(fakeAsync(inject(
       [APIService],
@@ -130,20 +130,21 @@ describe('API service', () => {
         let entrypoint = new EntryPoint('person');
         entrypoint.url = '/people';
         apiService.entrypoints = [entrypoint];
-      })));
+      }))
+    );
 
     it('should call API to get collection of a known model', fakeAsync(
-      inject([APIService],
-        (apiService) => {
-          const query: any = apiService.getCollection('person');
-          tick();
-          query.subscribe();
-          tick();
-          expect(apiService.getCollectionByUrl).toHaveBeenCalled();
-        })));
+      inject([], () => {
+        const query: any = apiService.getCollectionByModel('person');
+        tick();
+        query.subscribe();
+        tick();
+        expect(apiService.getCollectionByUrl).toHaveBeenCalled();
+      }))
+    );
 
     it('should not call API if model is unknown', () => {
-      expect(() => apiService.getCollection()).toThrow();
+      expect(() => apiService.getCollectionByModel()).toThrow();
       expect(apiService.getCollectionByUrl).not.toHaveBeenCalled();
     });
 

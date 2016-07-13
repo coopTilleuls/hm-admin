@@ -20,4 +20,9 @@ export class MockSchemaService {
     });
     this.entrypoints = new BehaviorSubject([]);
   }
+
+  /**
+   * load API description
+   */
+  load() {}
 }
