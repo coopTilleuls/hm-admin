@@ -1,0 +1,11 @@
+api:
+    resource: .
+    type:     "api_platform"
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /doc
+
+api_hydra_vocab:
+    path: /vocab
+    defaults: { _controller: api_platform.hydra.action.documentation }

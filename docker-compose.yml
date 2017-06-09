@@ -2,7 +2,7 @@ version: '2'
 
 services:
     "hm-admin":
-        image: node:6
+        build: ./docker/hm-admin
         command: npm start
         working_dir: /app
         ports:
